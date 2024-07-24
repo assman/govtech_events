@@ -4,6 +4,8 @@ from models import NewEvent, UpdateEvent
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
@@ -16,6 +18,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    response = {"error": "Invalid JSON object"}
+
+    return JSONResponse(response, status_code=400)
 
 
 @app.get("/health-check")
