@@ -1,6 +1,7 @@
 import helpers
 from models import NewEvent, UpdateEvent
 
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -59,3 +60,7 @@ async def update_event(event_uuid, event: UpdateEvent):
     updated_document = await helpers.update_event_remarks(event_uuid, event)
 
     return updated_document
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
