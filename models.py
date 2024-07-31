@@ -29,7 +29,7 @@ class NewEvent(BaseModel):
     detection_time: Optional[datetime] = None
     image_data: Optional[str] = None
     video_data: Optional[str] = None
-    location: Optional[EventLocation] = None
+    location: Optional[EventLocation] = EventLocation(lat=0, lng=0)
 
 
 class UpdateEvent(BaseModel):
